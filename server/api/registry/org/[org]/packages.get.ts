@@ -1,11 +1,10 @@
 import { CACHE_MAX_AGE_ONE_HOUR, NPM_REGISTRY } from '#shared/utils/constants'
 import { FetchError } from 'ofetch'
-
-// Validation pattern for npm org names - url-sage symbold and not start with a dot (incl. ~test24214. or -ex~-)
-const NPM_ORG_NAME_RE = /^[\w~-][\w.~-]*$/
+import validatePackageName from 'validate-npm-package-name'
 
 function validateOrgName(name: string): void {
-  if (!name || name.length > 50 || !NPM_ORG_NAME_RE.test(name)) {
+  // `validatePackageName()` only support full npm package name string
+  if (!name || name.length > 50 || !validatePackageName(`@${name}/dummy`)) {
     throw createError({
       // TODO: throwing 404 rather than 400 as it's cacheable
       statusCode: 404,
