@@ -457,6 +457,13 @@ onBeforeUnmount(() => {
                     height="64"
                     class="w-12 h-12 rounded-lg ring-2 ring-transparent transition-shadow duration-200 hover:ring-accent"
                   />
+                  <span
+                    class="pointer-events-none absolute -top-9 inset-is-1/2 -translate-x-1/2 whitespace-nowrap rounded-md bg-gray-900 text-white dark:bg-gray-100 dark:text-gray-900 text-xs px-2 py-1 shadow-lg opacity-0 scale-95 transition-all duration-150 group-hover:opacity-100 group-hover:scale-100"
+                    dir="ltr"
+                    role="tooltip"
+                  >
+                    @{{ contributor.login }}
+                  </span>
                 </LinkBase>
                 <button
                   v-else
