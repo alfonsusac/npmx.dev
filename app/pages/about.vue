@@ -91,6 +91,11 @@ const activeBtnEl = shallowRef<HTMLElement>()
 let closeTimer: ReturnType<typeof setTimeout> | undefined
 let lastOpenTime = 0
 
+// Mouse tracking for scroll interactions
+let mouseX = 0
+let mouseY = 0
+let scrollTimer: ReturnType<typeof setTimeout> | undefined
+
 function cancelClose() {
   if (closeTimer) {
     clearTimeout(closeTimer)
@@ -256,16 +261,43 @@ function onDocumentKeydown(e: KeyboardEvent) {
   }
 }
 
+function onMouseMove(e: MouseEvent) {
+  mouseX = e.clientX
+  mouseY = e.clientY
+}
+
+function checkHover() {
+  const el = document.elementFromPoint(mouseX, mouseY)
+  const btn = el?.closest('button[data-cid]') as HTMLElement | null
+  if (btn) {
+    openById(Number(btn.dataset.cid), btn)
+  }
+}
+
+function onScroll() {
+  if (activeContributor.value) {
+    setActiveBtnExpanded(null, false)
+    activeContributor.value = undefined
+  }
+  clearTimeout(scrollTimer)
+  scrollTimer = setTimeout(checkHover, 150)
+}
+
 let activeBtnDom: HTMLElement | null = null
 
 onMounted(() => {
   document.addEventListener('pointerdown', onDocumentPointerDown)
   document.addEventListener('keydown', onDocumentKeydown)
+  window.addEventListener('scroll', onScroll, { passive: true })
+  window.addEventListener('mousemove', onMouseMove, { passive: true })
 })
 onBeforeUnmount(() => {
   cancelClose()
+  clearTimeout(scrollTimer)
   document.removeEventListener('pointerdown', onDocumentPointerDown)
   document.removeEventListener('keydown', onDocumentKeydown)
+  window.removeEventListener('scroll', onScroll)
+  window.removeEventListener('mousemove', onMouseMove)
 })
 </script>
 
