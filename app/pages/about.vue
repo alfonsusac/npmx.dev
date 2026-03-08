@@ -75,7 +75,7 @@ const roleLabels = computed(
 
 const activeContributor = shallowRef<GitHubContributor>()
 
-function onBeforeToggleHoverCard(event) {
+function onBeforeToggleHoverCard(event: ToggleEvent & { source: HTMLElement }) {
   const { cid } = event.source.dataset
   const contributor = contributors.value.find(c => c.id === Number(cid))
   activeContributor.value = contributor
