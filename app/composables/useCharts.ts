@@ -70,7 +70,7 @@ export function buildDailyEvolutionFromDaily(daily: DailyRawPoint[]): DailyDataP
     .slice()
     .sort((a, b) => a.day.localeCompare(b.day))
     .map(item => {
-      const dayDate = parseIsoDateOnly(item.day)
+      const dayDate = parseIsoDate(item.day)
       const timestamp = dayDate.getTime()
 
       return { day: item.day, value: item.value, timestamp }
@@ -83,13 +83,13 @@ export function buildRollingWeeklyEvolutionFromDaily(
   rangeEndIso: string,
 ): WeeklyDataPoint[] {
   const sorted = daily.slice().sort((a, b) => a.day.localeCompare(b.day))
-  const rangeStartDate = parseIsoDateOnly(rangeStartIso)
-  const rangeEndDate = parseIsoDateOnly(rangeEndIso)
+  const rangeStartDate = parseIsoDate(rangeStartIso)
+  const rangeEndDate = parseIsoDate(rangeEndIso)
 
   const groupedByIndex = new Map<number, number>()
 
   for (const item of sorted) {
-    const itemDate = parseIsoDateOnly(item.day)
+    const itemDate = parseIsoDate(item.day)
     const dayOffset = Math.floor((itemDate.getTime() - rangeStartDate.getTime()) / 86400000)
     if (dayOffset < 0) continue
 
@@ -173,7 +173,7 @@ export function buildMonthlyEvolutionFromDaily(daily: DailyRawPoint[]): MonthlyD
   return Array.from(valuesByMonth.entries())
     .sort(([a], [b]) => a.localeCompare(b))
     .map(([month, value]) => {
-      const monthStartDate = parseIsoDateOnly(`${month}-01`)
+      const monthStartDate = parseIsoDate(`${month}-01`)
       const timestamp = monthStartDate.getTime()
       return { month, value, timestamp }
     })
@@ -191,7 +191,7 @@ export function buildYearlyEvolutionFromDaily(daily: DailyRawPoint[]): YearlyDat
   return Array.from(valuesByYear.entries())
     .sort(([a], [b]) => a.localeCompare(b))
     .map(([year, value]) => {
-      const yearStartDate = parseIsoDateOnly(`${year}-01-01`)
+      const yearStartDate = parseIsoDate(`${year}-01-01`)
       const timestamp = yearStartDate.getTime()
       return { year, value, timestamp }
     })

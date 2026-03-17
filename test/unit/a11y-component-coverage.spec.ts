@@ -22,10 +22,13 @@ import { assert, describe, it } from 'vitest'
  * from #components, it counts as testing `SomeComponent.client.vue` if it exists.
  */
 const SKIPPED_COMPONENTS: Record<string, string> = {
-  // OgImage components are server-side rendered images, not interactive UI
-  'OgImage/BlogPost.vue': 'OG Image component - server-rendered image, not interactive UI',
+  // OG image components are server-side rendered images, not interactive UI
+  'OgBrand.vue': 'OG Image component - server-rendered image, not interactive UI',
+  'OgLayout.vue': 'OG Image component - server-rendered image, not interactive UI',
+  'OgImage/BlogPost.takumi.vue': 'OG Image component - server-rendered image, not interactive UI',
   'OgImage/Package.takumi.vue': 'OG Image component - server-rendered image, not interactive UI',
   'OgImage/Page.takumi.vue': 'OG Image component - server-rendered image, not interactive UI',
+  'OgImage/Profile.takumi.vue': 'OG Image component - server-rendered image, not interactive UI',
   'OgImage/Splash.takumi.vue': 'OG Image component - server-rendered image, not interactive UI',
 
   // Client-only components with complex dependencies

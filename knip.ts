@@ -6,7 +6,6 @@ const config: KnipConfig = {
       entry: [
         'app/pages/**/*.vue!',
         'app/components/**/*.vue!',
-        'app/components/**/*.d.vue.ts!',
         'app/composables/**/*.ts!',
         'app/middleware/**/*.ts!',
         'app/plugins/**/*.ts!',
