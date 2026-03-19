@@ -77,14 +77,25 @@ watch([pkg, type, queryParams], () => {
   isValid.value = true
 })
 
+const formatLabel = (str) => {
+  if (!str || typeof str !== 'string') return ''
+  return str
+    .split('-')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' per ')
+}
+
 const copyToClipboard = async () => {
   const markdown = `[![Open on npmx.dev](${badgeUrl.value})](https://npmx.dev/package/${pkg.value})`
-  await navigator.clipboard.writeText(markdown)
-
-  copied.value = true
-  setTimeout(() => {
-    copied.value = false
-  }, 2000)
+  try {
+    await navigator.clipboard.writeText(markdown)
+    copied.value = true
+    setTimeout(() => {
+      copied.value = false
+    }, 2000)
+  } catch {
+    console.error('Failed to copy to clipboard')
+  }
 }
 </script>
 
@@ -110,11 +121,8 @@ const copyToClipboard = async () => {
           >Badge Type</label
         >
         <div class="relative">
-          <select
-            v-model="type"
-            class="w-full h-10.5 px-4 py-2 rounded-lg border border-gray-200 dark:border-white/10 bg-white dark:bg-black/20 focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none text-sm transition-all appearance-none cursor-pointer"
-          >
-            <option v-for="t in types" :key="t" :value="t" class="dark:bg-gray-900">{{ t }}</option>
+          <select v-model="type" class="w-full h-10.5 px-4 py-2 rounded-lg border border-gray-200 dark:border-white/10 bg-white dark:bg-black/20 focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none text-sm transition-all appearance-none cursor-pointer">
+            <option v-for="t in types" :key="t" :value="t" class="dark:bg-gray-900">{{ formatLabel(t) }}</option>
           </select>
           <span
             class="absolute right-3 top-1/2 -translate-y-1/2 i-lucide-chevron-down w-4 h-4 text-gray-400 pointer-events-none"
