@@ -1272,6 +1272,18 @@
           "properties": {
             "load_more": {
               "type": "string"
+            },
+            "size_increase": {
+              "type": "string"
+            },
+            "size_decrease": {
+              "type": "string"
+            },
+            "dep_increase": {
+              "type": "string"
+            },
+            "dep_decrease": {
+              "type": "string"
             }
           },
           "additionalProperties": false

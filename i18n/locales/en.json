@@ -422,7 +422,11 @@
       "no_match_filter": "No versions match {filter}"
     },
     "timeline": {
-      "load_more": "Load more"
+      "load_more": "Load more",
+      "size_increase": "Install size increased by {percent}% ({size})",
+      "size_decrease": "Install size decreased by {percent}% ({size})",
+      "dep_increase": "{count} dependencies added",
+      "dep_decrease": "{count} dependencies removed"
     },
     "dependencies": {
       "title": "Dependency ({count}) | Dependencies ({count})",
