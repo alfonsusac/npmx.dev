@@ -31,7 +31,7 @@ const types = [
   'name',
 ]
 
-watch(pkg, () => {
+watch([pkg, type], () => {
   isValid.value = true
 })
 
@@ -110,7 +110,7 @@ const copyToClipboard = async () => {
 
         <button
           @click="copyToClipboard"
-          :disabled="!isValid"
+          :disabled="!isValid || !pkg"
           class="px-4 h-full text-[11px] font-bold uppercase tracking-widest transition-all disabled:opacity-20 disabled:cursor-not-allowed min-w-21.25 hover:bg-gray-50 dark:hover:bg-white/5"
           :class="
             copied

@@ -153,7 +153,7 @@ const copyToClipboard = async () => {
           </div>
           <button
             @click="copyToClipboard"
-            :disabled="!isValid || !isInputValid"
+            :disabled="!isValid || !isInputValid || !pkg"
             class="px-6 h-full text-[11px] font-bold uppercase tracking-widest transition-all disabled:opacity-20 disabled:cursor-not-allowed min-w-24 hover:bg-gray-50 dark:hover:bg-white/5"
             :class="
               copied
