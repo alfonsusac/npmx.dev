@@ -1,4 +1,4 @@
-import { describe, expect, it, vi, beforeEach } from 'vitest'
+import { describe, expect, it, vi, beforeEach, afterAll } from 'vitest'
 import { createError, type H3Event } from 'h3'
 import type { Packument, PackumentVersion } from '#shared/types/npm-registry'
 
@@ -38,6 +38,10 @@ function makePackument(opts: {
 }
 
 const fakeEvent = {} as H3Event
+
+afterAll(() => {
+  vi.unstubAllGlobals()
+})
 
 describe('timeline API', () => {
   beforeEach(() => {
