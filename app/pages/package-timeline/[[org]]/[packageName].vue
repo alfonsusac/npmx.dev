@@ -20,7 +20,7 @@ const packageName = computed(() =>
 )
 const version = computed(() => route.params.version)
 
-const { data: pkg } = usePackage(packageName)
+const { data: pkg } = usePackage(packageName, version)
 
 const latestVersion = computed(() => {
   if (!pkg.value) return null
