@@ -1365,6 +1365,12 @@
             },
             "esm_removed": {
               "type": "string"
+            },
+            "types_added": {
+              "type": "string"
+            },
+            "types_removed": {
+              "type": "string"
             }
           },
           "additionalProperties": false

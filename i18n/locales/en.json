@@ -453,7 +453,9 @@
       "dep_decrease": "{count} dependencies removed",
       "license_change": "License changed from {from} to {to}",
       "esm_added": "Module type changed to ESM",
-      "esm_removed": "Module type changed from ESM to CJS"
+      "esm_removed": "Module type changed from ESM to CJS",
+      "types_added": "TypeScript types added",
+      "types_removed": "TypeScript types removed"
     },
     "dependencies": {
       "title": "Dependency ({count}) | Dependencies ({count})",
