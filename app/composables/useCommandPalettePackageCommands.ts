@@ -32,10 +32,14 @@ export function useCommandPalettePackageCommands(
       if (!resolvedContext?.resolvedVersion) return []
 
       const splitName = resolvedContext.packageName.split('/')
+      const docsPath =
+        splitName.length === 2
+          ? ([splitName[0]!, splitName[1]!, 'v', resolvedContext.resolvedVersion] as const)
+          : ([splitName[0]!, 'v', resolvedContext.resolvedVersion] as const)
       const docsLink = {
         name: 'docs' as const,
         params: {
-          path: [...splitName, 'v', resolvedContext.resolvedVersion] as [string, ...string[]],
+          path: docsPath,
         },
       }
       const codeLink = {
