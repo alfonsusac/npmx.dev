@@ -48,6 +48,20 @@ async function runAxe(wrapper: VueWrapper): Promise<AxeResults> {
   return axe.run(container, axeRunOptions)
 }
 
+async function runAxeElements(elements: Array<Element | null | undefined>): Promise<AxeResults> {
+  const container = document.createElement('div')
+  container.id = `test-container-${Date.now()}`
+  document.body.appendChild(container)
+  mountedContainers.push(container)
+
+  for (const element of elements) {
+    if (!element) continue
+    container.appendChild(element.cloneNode(true))
+  }
+
+  return axe.run(container, axeRunOptions)
+}
+
 // --- Console warning assertion --------------------------------------------------
 // Fail any test that emits unexpected console.warn calls. This catches issues
 // like missing/invalid props that would otherwise silently pass.
@@ -504,11 +518,16 @@ describe('component accessibility audits', () => {
     })
 
     it('should have no accessibility violations when open', async () => {
-      const component = await mountSuspended(CommandPaletteHarness)
+      await mountSuspended(CommandPaletteHarness)
       await nextTick()
       await nextTick()
 
-      const results = await runAxe(component)
+      const dialog = document.getElementById('command-palette-modal')
+      const announcer = document.getElementById('command-palette-modal-announcement')
+
+      expect(dialog).not.toBeNull()
+
+      const results = await runAxeElements([announcer, dialog])
       expect(results.violations).toEqual([])
     })
   })

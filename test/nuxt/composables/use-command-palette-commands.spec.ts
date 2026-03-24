@@ -399,6 +399,24 @@ describe('useCommandPaletteCommands', () => {
     wrapper.unmount()
   })
 
+  it('does not inject version overrides into unrelated palette subviews', async () => {
+    const { wrapper, groupedCommands, flatCommands } = await captureCommandPalette({
+      view: 'languages',
+      query: '^3.4.0',
+      packageContext: {
+        packageName: 'vue',
+        resolvedVersion: '3.4.2',
+        latestVersion: '4.0.0',
+        versions: ['4.0.0', '3.5.0', '3.4.2', '3.3.0'],
+      },
+    })
+
+    expect(groupedCommands.value.map(group => group.id)).not.toContain('versions')
+    expect(flatCommands.value.some(command => command.id.startsWith('version:'))).toBe(false)
+
+    wrapper.unmount()
+  })
+
   it('shows accent color commands on the accent color subpage', async () => {
     const { wrapper, groupedCommands, flatCommands } = await captureCommandPalette({
       view: 'accent-colors',
@@ -474,7 +492,7 @@ describe('useCommandPaletteCommands', () => {
     expect(flatCommands.value.find(command => command.id === 'package-docs')?.to).toEqual({
       name: 'docs',
       params: {
-        path: ['@scope/pkg', 'v', '1.0.0'],
+        path: ['@scope', 'pkg', 'v', '1.0.0'],
       },
     })
 

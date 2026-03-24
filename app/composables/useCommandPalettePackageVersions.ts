@@ -5,31 +5,37 @@ export function useCommandPalettePackageVersions(
   packageName: MaybeRefOrGetter<string | null | undefined>,
 ) {
   const versions = shallowRef<string[] | null>(null)
-  let versionsPromise: Promise<void> | null = null
+  let pendingLoad: Promise<void> | null = null
+  let loadToken = 0
 
   watch(
     () => toValue(packageName),
     () => {
       versions.value = null
-      versionsPromise = null
+      pendingLoad = null
+      loadToken += 1
     },
   )
 
   async function ensureLoaded() {
     const resolvedPackageName = toValue(packageName)
     if (!resolvedPackageName || versions.value) return
-    if (versionsPromise) return versionsPromise
+    if (pendingLoad) return pendingLoad
 
-    versionsPromise = fetchAllPackageVersions(resolvedPackageName)
+    const requestToken = ++loadToken
+    const load = fetchAllPackageVersions(resolvedPackageName)
       .then(allVersions => {
-        if (toValue(packageName) !== resolvedPackageName) return
+        if (requestToken !== loadToken || toValue(packageName) !== resolvedPackageName) return
         versions.value = allVersions.map(version => version.version)
       })
       .finally(() => {
-        versionsPromise = null
+        if (pendingLoad === load) {
+          pendingLoad = null
+        }
       })
 
-    return versionsPromise
+    pendingLoad = load
+    return load
   }
 
   return {

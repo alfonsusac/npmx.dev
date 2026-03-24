@@ -336,9 +336,24 @@ defineOgImageComponent('Default', {
 
 useCommandPaletteContextCommands(
   computed((): CommandPaletteContextCommandInput[] => {
-    if (!isViewingFile.value || isBinaryFile.value || !fileContent.value) return []
+    if (!isViewingFile.value) return []
 
-    const commands: CommandPaletteContextCommandInput[] = [
+    const commands: CommandPaletteContextCommandInput[] = []
+
+    if (filePath.value) {
+      commands.push({
+        id: 'code-open-raw',
+        group: 'links',
+        label: $t('code.raw'),
+        keywords: [packageName.value, filePath.value],
+        iconClass: 'i-lucide:file-output',
+        href: `https://cdn.jsdelivr.net/npm/${packageName.value}@${version.value}/${filePath.value}`,
+      })
+    }
+
+    if (isBinaryFile.value || !fileContent.value) return commands
+
+    commands.push(
       {
         id: 'code-copy-link',
         group: 'actions',
@@ -359,18 +374,7 @@ useCommandPaletteContextCommands(
           copyFileContent()
         },
       },
-    ]
-
-    if (filePath.value) {
-      commands.push({
-        id: 'code-open-raw',
-        group: 'links',
-        label: $t('code.raw'),
-        keywords: [packageName.value, filePath.value],
-        iconClass: 'i-lucide:file-output',
-        href: `https://cdn.jsdelivr.net/npm/${packageName.value}@${version.value}/${filePath.value}`,
-      })
-    }
+    )
 
     if (fileContent.value.markdownHtml) {
       commands.push(

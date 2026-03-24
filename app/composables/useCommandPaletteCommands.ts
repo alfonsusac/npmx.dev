@@ -164,9 +164,12 @@ export function useCommandPaletteCommands() {
   })
 
   const matchedCommands = computed(() => {
+    const availableGroups = new Set(commands.value.map(command => command.group))
     let nextCommands = results.value.map(result => result.item)
 
     queryOverrides.value.forEach(({ scopeId, group }) => {
+      if (!availableGroups.has(group)) return
+
       const resolve = resolveQueryOverride(scopeId, group)
       if (!resolve) return
       const overrideCommands = resolve(trimmedQuery.value)

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { updateProfile as updateProfileUtil } from '~/utils/atproto/profile'
 import type { CommandPaletteContextCommandInput } from '~/types/command-palette'
+import { getSafeHttpUrl } from '#shared/utils/url'
 
 const route = useRoute('profile-identity')
 const identity = computed(() => route.params.identity)
@@ -94,6 +95,7 @@ const inviteUrl = computed(() => {
   const text = $t('profile.invite.compose_text', { handle: profile.value.handle })
   return `https://bsky.app/intent/compose?text=${encodeURIComponent(text)}`
 })
+const safeProfileWebsiteUrl = computed(() => getSafeHttpUrl(profile.value.website))
 
 useCommandPaletteContextCommands(
   computed((): CommandPaletteContextCommandInput[] => {
@@ -112,14 +114,14 @@ useCommandPaletteContextCommands(
       })
     }
 
-    if (profile.value.website) {
+    if (safeProfileWebsiteUrl.value) {
       commands.push({
         id: 'profile-website',
         group: 'links',
         label: $t('profile.website'),
-        keywords: [profile.value.website, profile.value.handle ?? identity.value],
+        keywords: [profile.value.website ?? '', profile.value.handle ?? identity.value],
         iconClass: 'i-lucide:link',
-        href: profile.value.website,
+        href: safeProfileWebsiteUrl.value,
       })
     }
 
@@ -207,7 +209,11 @@ defineOgImageComponent('Default', {
         <p v-if="profile.description">{{ profile.description }}</p>
         <div class="flex gap-4 items-center font-mono text-sm">
           <h2>@{{ profile.handle ?? identity }}</h2>
-          <LinkBase v-if="profile.website" :to="profile.website" classicon="i-lucide:link">
+          <LinkBase
+            v-if="safeProfileWebsiteUrl"
+            :to="safeProfileWebsiteUrl"
+            classicon="i-lucide:link"
+          >
             {{ profile.website }}
           </LinkBase>
           <ButtonBase

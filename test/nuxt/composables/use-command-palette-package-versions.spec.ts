@@ -118,4 +118,38 @@ describe('useCommandPalettePackageVersions', () => {
 
     wrapper.unmount()
   })
+
+  it('keeps deduping the active package while an older request finishes', async () => {
+    const pendingFetches = new Map<string, (value: Array<{ version: string }>) => void>()
+    mockFetchAllPackageVersions.mockImplementation(
+      (packageName: string) =>
+        new Promise<Array<{ version: string }>>(resolve => {
+          pendingFetches.set(packageName, resolve)
+        }),
+    )
+
+    const { wrapper, packageName, result } = await capturePackageVersions('vue')
+
+    const vueLoad = result.ensureLoaded()
+
+    packageName.value = 'react'
+    await nextTick()
+
+    const firstReactLoad = result.ensureLoaded()
+
+    pendingFetches.get('vue')?.([{ version: '3.5.0' }])
+    await vueLoad
+    await nextTick()
+
+    const secondReactLoad = result.ensureLoaded()
+
+    expect(mockFetchAllPackageVersions).toHaveBeenCalledTimes(2)
+
+    pendingFetches.get('react')?.([{ version: '19.0.0' }])
+    await Promise.all([firstReactLoad, secondReactLoad])
+
+    expect(result.versions.value).toEqual(['19.0.0'])
+
+    wrapper.unmount()
+  })
 })
