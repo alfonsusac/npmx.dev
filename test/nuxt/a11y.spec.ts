@@ -532,6 +532,7 @@ describe('component accessibility audits', () => {
       const announcer = document.getElementById('command-palette-modal-announcement')
 
       expect(dialog).not.toBeNull()
+      expect(announcer).not.toBeNull()
 
       const results = await runAxeElements([announcer, dialog])
       expect(results.violations).toEqual([])
