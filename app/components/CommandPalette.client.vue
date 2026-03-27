@@ -390,7 +390,6 @@ useEventListener(document, 'keydown', handleGlobalKeydown)
                     :aria-current="command.active ? 'true' : undefined"
                     @click="handleCommandClick(command)"
                     @focus="activeIndex = commandIndexMap.get(command.id) ?? -1"
-                    @mouseenter="activeIndex = commandIndexMap.get(command.id) ?? -1"
                   >
                     <span class="flex items-center gap-3">
                       <span
@@ -452,7 +451,6 @@ useEventListener(document, 'keydown', handleGlobalKeydown)
                   :aria-current="command.active ? 'true' : undefined"
                   @click="handleCommandClick(command)"
                   @focus="activeIndex = commandIndexMap.get(command.id) ?? -1"
-                  @mouseenter="activeIndex = commandIndexMap.get(command.id) ?? -1"
                 >
                   <span class="flex items-center gap-3">
                     <span

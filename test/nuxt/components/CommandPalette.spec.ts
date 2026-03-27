@@ -235,6 +235,27 @@ describe('CommandPalette', () => {
     expect(document.activeElement).toBe(input)
   })
 
+  it('does not change the active command when another item is hovered', async () => {
+    await mountPalette()
+
+    const commands = Array.from(
+      document.querySelectorAll<HTMLElement>('[data-command-item="true"]'),
+    )
+
+    document.dispatchEvent(new KeyboardEvent('keydown', { bubbles: true, key: 'ArrowDown' }))
+    await nextTick()
+
+    expect(document.activeElement).toBe(commands[0])
+    expect(commands[0]?.classList.contains('border-border/80')).toBe(true)
+
+    commands[1]?.dispatchEvent(new MouseEvent('mouseenter', { bubbles: true }))
+    await nextTick()
+
+    expect(document.activeElement).toBe(commands[0])
+    expect(commands[0]?.classList.contains('border-border/80')).toBe(true)
+    expect(commands[1]?.classList.contains('border-border/80')).toBe(false)
+  })
+
   it('returns to the root view with ArrowLeft only when the input is empty', async () => {
     await mountPalette()
 
