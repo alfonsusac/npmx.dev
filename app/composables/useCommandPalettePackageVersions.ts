@@ -23,17 +23,20 @@ export function useCommandPalettePackageVersions(
     if (pendingLoad) return pendingLoad
 
     const requestToken = ++loadToken
-    const load = fetchAllPackageVersions(resolvedPackageName)
-      .then(allVersions => {
-        if (requestToken !== loadToken || toValue(packageName) !== resolvedPackageName) return
+
+    async function doLoad(name: string) {
+      try {
+        const allVersions = await fetchAllPackageVersions(name)
+        if (requestToken !== loadToken || toValue(packageName) !== name) return
         versions.value = allVersions.map(version => version.version)
-      })
-      .finally(() => {
+      } finally {
         if (pendingLoad === load) {
           pendingLoad = null
         }
-      })
+      }
+    }
 
+    const load = doLoad(resolvedPackageName)
     pendingLoad = load
     return load
   }
