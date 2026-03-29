@@ -531,6 +531,9 @@
             },
             "background_theme_changed": {
               "type": "string"
+            },
+            "download_started": {
+              "type": "string"
             }
           },
           "additionalProperties": false

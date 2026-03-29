@@ -15,6 +15,7 @@ export function useCommandPalettePackageCommands(
 ) {
   const { t } = useI18n()
   const route = useRoute()
+  const { announce, close } = useCommandPalette()
 
   function isCurrentPackageCompare(packageName: string) {
     const packages = route.query.packages
@@ -118,13 +119,19 @@ export function useCommandPalettePackageCommands(
             t('package.download.tarball'),
           ],
           iconClass: 'i-lucide:download',
-          action: () => {
-            void downloadPackageTarball(resolvedContext.packageName, {
+          action: async () => {
+            await downloadPackageTarball(resolvedContext.packageName, {
               version: resolvedContext.resolvedVersion!,
               dist: {
                 tarball: resolvedContext.tarballUrl!,
               },
             })
+            close()
+            announce(
+              t('command_palette.announcements.download_started', {
+                package: resolvedContext.packageName,
+              }),
+            )
           },
         })
       }

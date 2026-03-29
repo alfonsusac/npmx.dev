@@ -175,7 +175,8 @@
       "relative_dates_off": "Relative dates off.",
       "theme_changed": "Theme set to {theme}.",
       "accent_color_changed": "Accent color set to {color}.",
-      "background_theme_changed": "Background shade set to {theme}."
+      "background_theme_changed": "Background shade set to {theme}.",
+      "download_started": "Downloading {package} tarball."
     }
   },
   "nav": {
