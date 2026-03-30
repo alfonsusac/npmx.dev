@@ -1415,7 +1415,7 @@
     "welcome": "Jika Anda tertarik membantu menerjemahkan {npmx} ke salah satu bahasa yang tercantum di bawah ini, Anda berada di tempat yang tepat! Halaman ini diperbarui secara otomatis dan selalu menampilkan semua konten yang saat ini membutuhkan bantuan Anda.",
     "p1": "Kami menggunakan {lang} sebagai bahasa default, dengan total {count} bahasa. Jika Anda ingin membantu menambahkan terjemahan, temukan bahasa di {bylang} dan perluas detailnya.",
     "p1_lang": "Bahasa Inggris Amerika (en-US)",
-    "p1_count": "0 pesan | 1 pesan |{count} pesan",
+    "p1_count": "0 pesan | 1 pesan | {count} pesan",
     "p2": "Sebelum memulai, silakan baca {guide} kami untuk mempelajari proses penerjemahan dan bagaimana Anda dapat berkontribusi.",
     "guide": "panduan lokalisasi (i18n)",
     "by_locale": "Progres terjemahan per locale",
@@ -1452,7 +1452,7 @@
       "repo_link": "repositori"
     },
     "return": {
-      "title": "kamik kembali!",
+      "title": "kami kembali!",
       "p1": "kami kembali dengan energi penuh dan siap untuk dorongan terakhir menuju 3 Maret. {social} untuk pembaruan.",
       "social_link": "ikuti kami di Bluesky"
     },
