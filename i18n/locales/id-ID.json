@@ -396,7 +396,7 @@
       "keywords": "Kata kunci",
       "license": "Lisensi",
       "select": "Pilih paket",
-      "select_maximum": "Maksimum {count} paket dapat dipilih" 
+      "select_maximum": "Maksimum {count} paket dapat dipilih"
     },
     "versions": {
       "title": "Versi",
@@ -1488,7 +1488,7 @@
       "wordmark": "WORDMARK LENGKAP",
       "wordmark_alt": "Logo wordmark lengkap npmx dengan garis biru di latar gelap",
       "wordmark_light_alt": "Logo wordmark lengkap npmx dengan garis aksen di latar terang",
-      "mark":"LOGO MARK",
+      "mark": "LOGO MARK",
       "mark_alt": "Logo mark npmx dengan titik dan garis di latar gelap",
       "mark_light_alt": "Logo mark npmx dengan titik dan garis di latar terang",
       "on_dark": "di latar gelap",
